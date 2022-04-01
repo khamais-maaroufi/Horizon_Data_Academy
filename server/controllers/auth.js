@@ -49,6 +49,7 @@ export const login = async (req, res) => {
     if (!user) return res.status(400).send("email is not found! try enter again.");
     //check if the hashed password is existing in the data base
     const match = await comparePassword(password, user.password);
+    if (match === false) return res.status(400).send("password is wrong! try enter again.");
     //created signed jwt
     const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET,{
       expiresIn: "7d",

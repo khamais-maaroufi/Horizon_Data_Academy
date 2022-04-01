@@ -46,7 +46,7 @@ export const login = async (req, res) => {
 
     //check if the email iis existing in the data base
     const user = await User.findOne({email}).exec();
-    if (!user) return res.status(400).send(400).send("no user found! try enter again");
+    if (!user) return res.status(400).send("email is not found! try enter again.");
     //check if the hashed password is existing in the data base
     const match = await comparePassword(password, user.password);
     //created signed jwt

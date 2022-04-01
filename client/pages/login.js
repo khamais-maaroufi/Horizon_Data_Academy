@@ -37,7 +37,8 @@ const login = () => {
             toast.success("Welcome to Horizon Data Academy.");
             setLoading(false);
         }catch(err){
-            toast.error(err.response.data);
+            //toast.error(err.response.data);
+            toast.error("retry entering your password & email");
             setLoading(false);
         }
     };

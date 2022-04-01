@@ -1,6 +1,6 @@
 import {Menu} from 'antd';
 import Link from "next/link";
-import {AppstoreOutlined, LoginOutlined, UserAddOutlined, LogoutOutlined} from "@ant-design/icons";
+import {AppstoreOutlined, LoginOutlined, UserAddOutlined, LogoutOutlined, CoffeeOutlined} from "@ant-design/icons";
 import {useState} from "react";
 import {useEffect, useContext} from "react";
 import reactDom from "react-dom";
@@ -11,7 +11,7 @@ import {toast} from 'react-toastify';
 import {useRouter} from 'next/router';
 
 
-const {Item} = Menu;
+const {Item, SubMenu} = Menu;
 
 const TopNav = () => {
     const [current, setCurrent] = useState("");
@@ -56,9 +56,11 @@ const TopNav = () => {
         )}
 
         { user !== null && (
+            <SubMenu icon={<CoffeeOutlined/>} title={user && user.name} className="float-right">
                 <Item onClick={logout} icon={<LogoutOutlined/>} className="float-right">
                 Logout
                 </Item>
+            </SubMenu>
         )}    
     </Menu>
     )

@@ -17,6 +17,7 @@ const TopNav = () => {
     const [current, setCurrent] = useState("");
 
     const {state, dispatch} = useContext(Context);
+    const { user } = state;
     const router = useRouter();
 
     useEffect (() => {
@@ -40,18 +41,25 @@ const TopNav = () => {
 
         </Item>
 
-        <Item key="/login" onClick={(e) => setCurrent(e.key)} icon={<LoginOutlined/>}>
-        <Link href="/login"><a>Login</a></Link>
+        {user === null && (
+            <>
+                <Item key="/login" onClick={(e) => setCurrent(e.key)} icon={<LoginOutlined/>}>
+                <Link href="/login"><a>Login</a></Link>
 
-        </Item>
+                </Item>
 
-        <Item key="/register" onClick={(e) => setCurrent(e.key)} icon={<UserAddOutlined/>}>
-        <Link href="/register"><a>register</a></Link>
+                <Item key="/register" onClick={(e) => setCurrent(e.key)} icon={<UserAddOutlined/>}>
+                <Link href="/register"><a>register</a></Link>
 
-        </Item>
-        <Item onClick={logout} icon={<LogoutOutlined/>} className="float-right">
-        Logout
-        </Item>
+                </Item>
+            </>
+        )}
+
+        { user !== null && (
+                <Item onClick={logout} icon={<LogoutOutlined/>} className="float-right">
+                Logout
+                </Item>
+        )}    
     </Menu>
     )
 };

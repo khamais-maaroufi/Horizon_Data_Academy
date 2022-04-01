@@ -17,7 +17,7 @@ export const hashPassword = (password) => {
     });
 };
 
-
+// it will return boolean value
 export const comparePassword = (password, hashed) => {
     return bcrypt.compare(password, hashed);
 };

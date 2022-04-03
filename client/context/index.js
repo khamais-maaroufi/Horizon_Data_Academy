@@ -63,6 +63,14 @@ const router = useRouter();
             return promise.reject(error);
         }
     );
+    useEffect(() => {
+        const getCsrfToken = async () => {
+        const {data} = await axios.get('/api/csrf-token');
+        console.log('csrf', data);
+        axios.defaults.headers['X-CSRF-TOKEN'] = data.getCsrfToken;
+    }
+        getCsrfToken();
+    }, []);
     return (
         <Context.Provider value={{state, dispatch}}>{children}</Context.Provider>
     );

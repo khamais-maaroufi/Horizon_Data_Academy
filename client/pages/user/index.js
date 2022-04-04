@@ -13,16 +13,20 @@ const UserIndex = () => {
             setHidden(false);
         }catch(err){
             console.log(err);
-            setHidden(false);
+            setHidden(true);
         }
     };
     useEffect(() =>{
         fetchUser();
     }, []);
     return (
+    <>
+    {!hidden && (
     <h1 className="jumbotron text-center square">
         <pre>{JSON.stringify(user)}</pre>
     </h1>
+    )}
+    </>
     );
 };
 export default UserIndex;

@@ -3,6 +3,7 @@ Horizon data Academy is web site meant for answering the needs of an education c
 the project is already in progress
 i'm working on the authentification system for users,
 i built a data base on mongo db atlas and i successfully linked it to our server application,
-now users are able to signup, login and logout... 
+now users are able to signup, login and logout
+i add a csrf verification token so the post/get request cannot be falsified
 
 ...

@@ -18,7 +18,7 @@ const login = () => {
     const router = useRouter();
 
     useEffect(() => {
-        if (user !== null) router.push('/');}
+        if (user !== null) router.push('/user');}
     , [user] );
 
     const handleSubmit = async (e) => {
@@ -33,7 +33,8 @@ const login = () => {
            dispatch({type: "LOGIN", payload: data});
             //save in local storage
             window.localStorage.setItem('user', JSON.stringify(data));
-            router.push("/");
+            //redirect
+            router.push("/user");
             toast.success("Welcome to Horizon Data Academy.");
             setLoading(false);
         }catch(err){

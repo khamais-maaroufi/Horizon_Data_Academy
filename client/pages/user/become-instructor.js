@@ -7,18 +7,28 @@ from "@ant-design/icons";
 import { toast } from 'react-toastify';
 import UserRoute from "../../components/routes/UserRoute";
 
-
 const becomeInstructor = () => {
     //state
     const [loading, setLoading] = useState(false);
+    const [password, setPassword] = useState("");
     const {state: {user}} = useContext(Context);
-
+    
     const becomeInstructor = () => {
         //console.log("we will redirect you to a forum");
         setLoading(true);
-        axios.post("/api/make-instructor").then((res) =>{
-            console.log(res);
-            window.location.href = res.data;
+        axios.post("/api/make-instructor", {password}).then((res) =>{
+            if (res.data === "y"){ 
+                toast.error('Token is wrong retry again');
+                setLoading(false);
+            }else
+            {if (res.data === false) {
+                toast.success("You are already registred as an instructor");
+                setLoading(false);
+            }else {
+                toast.success("You are registred as an instructor successfully");
+                setLoading(false);
+            }}
+            //window.location.href = res.data;
         })
         .catch((err) => {
             console.log(err.response.status);
@@ -39,6 +49,9 @@ const becomeInstructor = () => {
                             <br/>
                             <h2>Welcome to Horizon data Academy, you're our partner now.</h2>
                             <br/>
+                            <input type="password" className="form-control mb-4 p-4" value={password}
+                        onChange={(e) => setPassword(e.target.value)}  placeholder="Enter the Token" required/>
+                       
                             <Button className="mb-3" type="primary" block-shape="round"
                             icon={loading ? <LoadingOutlined/> : <SettingOutlined/>} size="large"
                             onClick={becomeInstructor}

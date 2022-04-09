@@ -21,13 +21,12 @@ const becomeInstructor = () => {
                 toast.error('Token is wrong retry again');
                 setLoading(false);
             }else
-            {if (res.data === false) {
-                toast.success("You are already registred as an instructor");
-                setLoading(false);
-            }else {
+            {
                 toast.success("You are registred as an instructor successfully");
                 setLoading(false);
-            }}
+                window.localStorage.setItem("user", JSON.stringify(res.data));
+                window.location.href = "/instructor";
+            }
             //window.location.href = res.data;
         })
         .catch((err) => {

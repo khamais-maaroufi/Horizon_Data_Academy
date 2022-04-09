@@ -7,12 +7,11 @@ export const makeInstructor = async (req, res) => {
     try {
         const user = await User.findById(req.user._id).exec();
 if (password !== process.env.INSTRUCTOR_TOKEN){res.send("y")}
-else {if (!user.role){
+else {
         user.role = "instructor";
         user.save();
-        res.send(true);
-    }else {
-        res.send(false);}}
+        res.send(user);
+    }
     }catch(err){
         console.log("make instructor error", err);
     }

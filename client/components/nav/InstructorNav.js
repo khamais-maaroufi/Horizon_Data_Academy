@@ -14,13 +14,12 @@ const InstructorNav = () => {
     
 
     return (
-    <div className="nav flex-column nav-pills mt-2">
+    <div className="nav flex-column nav-pills ">
         <Link href="/instructor">
             <a className={`nav-link ${current === "/instructor" && "active"}`}>Dashboard</a>
         </Link>
-        <br/>
         <Link href="/instructor/course/create">
-            <a className={`nav-link ${current === "/instructor/course/create" && "active"}`}>create cours</a>
+            <a className={`nav-link ${current === "/instructor/course/create" && "active"} mt-2`}>create cours</a>
         </Link>
     </div>
     );

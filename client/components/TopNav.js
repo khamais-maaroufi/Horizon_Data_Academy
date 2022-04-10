@@ -38,7 +38,7 @@ const TopNav = () => {
     };
 
     return (
-    <Menu mode="horizontal" selectedKeys={[current]}>
+    <Menu mode="horizontal" selectedKeys={[current]} className="mb-2">
         <Item key="/" onClick={(e) => setCurrent(e.key)} icon={<AppstoreOutlined/>}>
         <Link href="/"><a>Suggestions</a></Link>
 

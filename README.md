@@ -1,12 +1,3 @@
 # Horizon_data_academy
-Horizon data Academy is web site meant for answering the needs of an education center to help both student and teachers to access online services that helps them during their dedication to Horizon Data Academy the learning center of Horizon data enterprise.
-the project is already in progress
-i'm working on the authentification system for users,
-i built a data base on mongo db atlas and i successfully linked it to our server application,
-now users are able to signup, login and logout
-i add a csrf verification token so the post/get request cannot be falsified
-user's dashboard is protected from an external access using protected routes that verify the user current state
-we add a verification page so instructor can add himself with entering the right Token and click sumbit then he will be redirected 
-to the protected instructor page and 'create course' will appear for him in the conditional navigation bar.
-both "instructor" and "create course" pages are now protected and cannot be accessibal only for user with role="instructor".
+Horizon data Academy is a web site dedicated for answering the needs of an education center in order to help both student and teachers to access online services that help them during their dedication to Horizon Data Academy, the learning center of Horizon data enterprise. The project is already in progress, I'm working on the authentication system for users. I built a database on MongoDB Atlas and i successfully linked it to our server application, now users are able to signup, login and logout. I added a CSRF verification token so the post/get request cannot be falsified. User's dashboard is protected against external access, using protected routes that verify the user current state. We also added a verification page so instructors can add themselves by entering the right Token and click "Submit" and they will be redirected to the protected instructor page where they can see "Create Course" in the conditional navigation bar. Both "Instructor" and "Create Course" pages are now protected and accessible only for user with role="instructor".
 ...

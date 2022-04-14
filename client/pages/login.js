@@ -18,7 +18,12 @@ const login = () => {
     const router = useRouter();
 
     useEffect(() => {
-        if (user !== null) router.push('/user');}
+        if (user !== null && !(user.role && user.role.includes("Admin"))) 
+        {router.push('/user');}
+        else if(user && (user.role && !user.role.includes('Admin'))){
+            router.push('/Admin');
+        }
+    }
     , [user] );
 
     const handleSubmit = async (e) => {
@@ -34,7 +39,12 @@ const login = () => {
             //save in local storage
             window.localStorage.setItem('user', JSON.stringify(data));
             //redirect
-            router.push("/user");
+            //router.push("/user");
+            if (user && (user.role && !user.role.includes("Admin"))) 
+        {router.push('/user');}
+        else {
+            router.push('/Admin');
+        }
             toast.success("Welcome to Horizon Data Academy.");
             setLoading(false);
         }catch(err){

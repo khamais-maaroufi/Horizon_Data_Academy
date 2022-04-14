@@ -34,6 +34,16 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/instructor/course/create.js"
+    ],
+    "/user": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/user.js"
+    ],
+    "/user/become-instructor": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/user/become-instructor.js"
     ]
   },
   "ampFirstPages": []

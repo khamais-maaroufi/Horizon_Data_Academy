@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { stringify } from "querystring";
 const { Schema } = mongoose;
 
-const ROLE = ["student","instructor", "Admin"];
+const ROLE = ["Subscriber","instructor", "Admin"];
 
 const userSchema = new Schema ({
     name: {
@@ -28,14 +28,14 @@ const userSchema = new Schema ({
         type: String,
         default: "/avatar.png",
     },
+    CIN: {
+        type: Number,
+        
+    },
     role: {
         type: String,
-        //default: "Subscriber",
+        default: "Subscriber",
         enum: ROLE,
-        stripe_account_id: "",
-        stripe_seller: "",
-        stripeSession: {},
-
     },
     timestamps: Date,
 });

@@ -8,17 +8,19 @@ import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from "react-dom";
 export const register = async (req, res) => {
   try {
         //console.log(req.body);
-        const {name, email, password} = req.body;
+        const {name, email, password, CIN} = req.body;
 
         //validation
         if (!name) return res.status(400).send("The name is required");
+        if (!CIN) return res.status(400).send("The CIN is required");
         if (!password || password.length < 6) {
             return res.status(400)
             .send("password is required and should be min 6 characters long");
         }
         let userExist = await User.findOne({email}).exec();
+        let CINExist = await User.findOne({CIN}).exec();
         if (userExist) return res.status(400).send("Email is already existing!");
-
+        if (CINExist) return res.status(400).send("CIN is already existing!");
         //hash password
         const hashedPassword = await hashPassword(password);
         
@@ -27,6 +29,7 @@ export const register = async (req, res) => {
             name,
             email,
             password: hashedPassword,
+            CIN,
         });
         await user.save();
         console.log(" user saved succesfully");
@@ -35,7 +38,7 @@ export const register = async (req, res) => {
 
   } catch(err){
         console.log(err);
-        return res.status(400).send("error try agin");
+        return res.status(400).send("error try agin!");
   }
 };
 

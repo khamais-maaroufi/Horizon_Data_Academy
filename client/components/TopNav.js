@@ -37,6 +37,7 @@ const TopNav = () => {
         router.push('/login');
     };
 
+    if (user && (user.role && !user.role.includes('Admin'))){
     return (
     <Menu mode="horizontal" selectedKeys={[current]} className="mb-2">
         <Item key="/" onClick={(e) => setCurrent(e.key)} icon={<AppstoreOutlined/>}>
@@ -85,7 +86,48 @@ const TopNav = () => {
             </SubMenu>
         )}    
     </Menu>
-    )
+    )}
+    else{
+        return (
+
+        <Menu mode="horizontal" selectedKeys={[current]} className="mb-2">
+
+            <Item key="/" onClick={(e) => setCurrent(e.key)} icon={<AppstoreOutlined/>}>
+            <Link href="/"><a>Published</a></Link>
+            </Item>
+            {user === null && (
+            <>
+                <Item key="/login" onClick={(e) => setCurrent(e.key)} icon={<LoginOutlined/>}>
+                <Link href="/login"><a>Login</a></Link>
+
+                </Item>
+
+                <Item key="/register" onClick={(e) => setCurrent(e.key)} icon={<UserAddOutlined/>}>
+                <Link href="/register"><a>register</a></Link>
+
+                </Item>
+            </>
+        )}
+            { user !== null && (
+            <SubMenu icon={<CoffeeOutlined/>} title={user && user.name} className="float-right">
+                    <ItemGroup>
+                        <Item key="/Admin">
+                        <Link href="/Admin">
+                            <a>Admin Dashboard</a>
+                        </Link>
+                        </Item>
+                    <Item onClick={logout} icon={<LogoutOutlined/>} className="float-right">
+                    Logout
+                    </Item>
+                    </ItemGroup>
+            </SubMenu>)}
+              
+        </Menu>
+        )
+    }
+
+
+
 };
 
 export default TopNav;

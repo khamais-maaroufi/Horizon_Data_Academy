@@ -20,6 +20,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/Admin.js"
     ],
+    "/Admin/Evalidation": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/Admin/Evalidation.js"
+    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

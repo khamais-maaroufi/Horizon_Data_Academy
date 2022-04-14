@@ -17,6 +17,11 @@ const AdminNav = () => {
         <Link href="/Admin">
             <a className={`nav-link ${current === "/Admin" && "active"}`}>Dashboard</a>
         </Link>
+    
+    
+        <Link href="/Admin/Evalidation">
+        <a className={`nav-link ${current === "/Admin/Evalidation" && "active"}`}>Enrollemennt Validation</a>
+        </Link>
     </div>
     );
 };

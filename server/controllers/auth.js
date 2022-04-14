@@ -93,3 +93,17 @@ export const currentUser = async (req, res) => {
     console.log(err);
   }
 };
+
+export const currentAdmin = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).exec();
+    console.log("CURRENT_USER", user);
+    if(user.role.includes('Admin'))
+    {return res.json({ok: true});}
+    else{
+      res.status(404);
+    }
+  }catch(err){
+    console.log(err);
+  }
+};

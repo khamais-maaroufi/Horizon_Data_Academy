@@ -1,9 +1,11 @@
+import AdminRoute from "../../components/routes/AdminRoute";
+
 const index = () => {
 
     return (
-    <>
-    <h1 className="jumbotron text-center bg-primary">Horizon Data Academy</h1>
-    </>
+    <AdminRoute>
+    <h1 className="jumbotron text-center bg-primary">Administrator Dashboard</h1>
+    </AdminRoute>
     )
 };
 

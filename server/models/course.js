@@ -53,7 +53,7 @@ const courseSchema = new mongoose.Schema({
 
     },
     paid: {
-        typ: Boolean,
+        type: Boolean,
         default: false,
     },
     instructor: {

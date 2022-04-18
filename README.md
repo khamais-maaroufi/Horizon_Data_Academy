@@ -3,4 +3,5 @@ Horizon data Academy is a web site dedicated for answering the needs of an educa
 now Admin dashboard is reaady and it is accessible only for the accout mail "Admin" with password"Admin145"
 Administration page is protected from external access.
 Now instructor can create course and it goes successfully saved in the Data Base(Mongo DB Atlas).
+Now instructor can see his own created courses on the dashboard.
 ...

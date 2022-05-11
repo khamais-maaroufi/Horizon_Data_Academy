@@ -43,7 +43,7 @@ const CourseCreate = () => {
         console.log("image uploaded", data);
 
         // setting image in the state
-
+        setImage(data);
         setValues({ ...values, loading: false });
       } catch (err) {
         console.log(err);

@@ -34,7 +34,7 @@ export const uploadImage = (req, res) => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
-          res.send(downloadURL);
+          res.json(downloadURL);
         });
       }
     );

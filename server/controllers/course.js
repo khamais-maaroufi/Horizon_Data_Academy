@@ -65,3 +65,14 @@ export const create = async (req, res) => {
     return res.status(400).send("Sorry Failed to save your course! Try again");
   }
 };
+
+export const read = async (req, res) => {
+  try {
+    const course = await Course.findOne({ slug: req.params.slug })
+      .populate("instructor", "_id name")
+      .exec();
+    res.json(course);
+  } catch (err) {
+    consolelog(err);
+  }
+};

@@ -2,11 +2,16 @@ import { Button } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
-
 import "react-datepicker/dist/react-datepicker.css";
+
+import TextField from "@mui/material/TextField";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
 
 const AddLessonForm = ({ values, setValues, handleAddLesson, uploading }) => {
   const [startDate, setStartDate] = useState(null);
+  const [value, setValue] = React.useState(new Date());
 
   return (
     <div className="container pt-3">
@@ -40,7 +45,28 @@ const AddLessonForm = ({ values, setValues, handleAddLesson, uploading }) => {
           isClearable
           showYearDropdown
           scrollableMonthYearDropdown
+          required
         />
+
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <StaticTimePicker
+            displayStaticWrapperAs="mobile"
+            value={value}
+            onChange={(newValue) => {
+              setValue(newValue);
+              setValues({
+                ...values,
+                time:
+                  newValue.getHours() +
+                  ":" +
+                  newValue.getMinutes() +
+                  ":" +
+                  newValue.getSeconds(),
+              });
+            }}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider>
 
         <Button
           onClick={handleAddLesson}

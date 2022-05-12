@@ -18,6 +18,7 @@ const CourseView = () => {
     title: "",
     content: "",
     start_date: null,
+    time: null,
   });
   const [uploading, setUploading] = useState(false);
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import InstructorRoute from "../../../../components/routes/instructorRoute";
+import { Router } from "next/router";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { Avatar, Tooltip, Button, Modal, List } from "antd";
@@ -92,7 +93,12 @@ const CourseView = () => {
 
                   <div className="d-flex col">
                     <Tooltip title="Edit">
-                      <EditOutlined className="h5 pointer text-warning" />
+                      <EditOutlined
+                        onClick={() =>
+                          router.push(`/instructor/course/edit/${slug}`)
+                        }
+                        className="h5 pointer text-warning mr-3 ml-3 pr-3 pl-3"
+                      />
                     </Tooltip>
                     <Tooltip title="Check">
                       <CheckOutlined className="h5 pointer text-danger " />

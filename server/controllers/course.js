@@ -76,3 +76,22 @@ export const read = async (req, res) => {
     consolelog(err);
   }
 };
+
+//add lesson to data base
+
+export const addLesson = async (req, res) => {
+  try {
+    const { slug, instructorId } = req.params;
+    const { title, content, start_date, time } = req.body;
+    if (req.user._id != instructorId) {
+      return res.status(400).send("unauthorized");
+    }
+    const updated = await Course.findOneAndUpdate({slug}, {
+      $push: {lessons: {title, content, start_date, time, slug: slugify(title)}}
+    }, {new: true}).populate("instructor", "_id name").exec();
+    res.json(updated)
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send("add lesson failed!");
+  }
+};

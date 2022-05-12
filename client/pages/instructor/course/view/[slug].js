@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import InstructorRoute from "../../../../components/routes/instructorRoute";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { Avatar, Tooltip, Button, Modal } from "antd";
+import { Avatar, Tooltip, Button, Modal, List } from "antd";
 import { EditOutlined, CheckOutlined, UploadOutlined } from "@ant-design/icons";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import ReactDom from "react-dom";
 import AddLessonForm from "../../../../components/forms/AddLessonForm";
+import { toast } from "react-toastify";
 
 const CourseView = () => {
   const [course, setCourse] = useState({});
@@ -32,9 +33,29 @@ const CourseView = () => {
 
   // function for add lesson
 
-  const handleAddLesson = (e) => {
+  const handleAddLesson = async (e) => {
     e.preventDefault();
     console.log(values);
+    try {
+      const { data } = await axios.post(
+        `/api/course/lesson/${slug}/${course.instructor._id}`,
+        values
+      );
+      console.log("server response update: ", data);
+      setValues({
+        ...values,
+        title: "",
+        content: "",
+        start_date: null,
+        time: null,
+      });
+      setVisible(false);
+      setCourse(data);
+      toast.success("Lesson was added successfully.");
+    } catch (err) {
+      console.log(err);
+      toast.error("Failed to add Lesson! Try later");
+    }
   };
 
   useEffect(() => {
@@ -113,6 +134,28 @@ const CourseView = () => {
                   uploading={uploading}
                 />
               </Modal>
+
+              <div className="row pb-5">
+                <div className="col lesson-list">
+                  <h4>
+                    {course && course.lessons && course.lessons.legth} Lessons
+                    Created
+                  </h4>
+
+                  <List
+                    itemLayout="horizontal"
+                    dataSource={course && course.lessons}
+                    renderItem={(item, index) => (
+                      <List.Item>
+                        <List.Item.Meta
+                          avatar={<Avatar>{index + 1}</Avatar>}
+                          title={item.title}
+                        ></List.Item.Meta>
+                      </List.Item>
+                    )}
+                  ></List>
+                </div>
+              </div>
             </div>
           </div>
         )}

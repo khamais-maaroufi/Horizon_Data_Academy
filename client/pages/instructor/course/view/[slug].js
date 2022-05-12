@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import InstructorRoute from "../../../../components/routes/instructorRoute";
 import { useRouter } from "next/router";
 import axios from "axios";
-//import { loadComponents } from "next/dist/server/load-components";
 import { Avatar, Tooltip, Button, Modal } from "antd";
 import { EditOutlined, CheckOutlined, UploadOutlined } from "@ant-design/icons";
 import React from "react";
@@ -18,7 +17,7 @@ const CourseView = () => {
   const [values, setValues] = useState({
     title: "",
     content: "",
-    start_date: "",
+    start_date: null,
   });
   const [uploading, setUploading] = useState(false);
 

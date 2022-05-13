@@ -128,8 +128,8 @@ export const DeleteLesson = async (req, res) => {
     if (req.user._id != course.instructor) {
       return res.status(400).send("unauthorized");
     }
-    const courseDeleted = await Course.findByIdAndDelete(course._id, {
-      $pull: { lesson: { _id: lessonId } },
+    const courseDeleted = await Course.findByIdAndUpdate(course._id, {
+      $pull: { lessons: { _id: lessonId } },
     }).exec();
     res.json({ ok: true });
   } catch (err) {

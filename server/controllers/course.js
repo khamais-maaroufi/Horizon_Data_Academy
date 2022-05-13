@@ -86,12 +86,54 @@ export const addLesson = async (req, res) => {
     if (req.user._id != instructorId) {
       return res.status(400).send("unauthorized");
     }
-    const updated = await Course.findOneAndUpdate({slug}, {
-      $push: {lessons: {title, content, start_date, time, slug: slugify(title)}}
-    }, {new: true}).populate("instructor", "_id name").exec();
-    res.json(updated)
+    const updated = await Course.findOneAndUpdate(
+      { slug },
+      {
+        $push: {
+          lessons: { title, content, start_date, time, slug: slugify(title) },
+        },
+      },
+      { new: true }
+    )
+      .populate("instructor", "_id name")
+      .exec();
+    res.json(updated);
   } catch (err) {
     console.log(err);
     return res.status(400).send("add lesson failed!");
+  }
+};
+
+export const update = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const course = await Course.findOne({ slug }).exec();
+    if (req.user._id != course.instructor) {
+      return res.status(400).send("Unauthorized");
+    }
+    const updated = await Course.findOneAndUpdate({ slug }, req.body, {
+      new: true,
+    }).exec();
+    res.json(updated);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("update course failedd!");
+  }
+};
+
+export const DeleteLesson = async (req, res) => {
+  try {
+    const { slug, lessonId } = req.params;
+    const course = await Course.findOne({ slug }).exec();
+    if (req.user._id != course.instructor) {
+      return res.status(400).send("unauthorized");
+    }
+    const courseDeleted = await Course.findByIdAndDelete(course._id, {
+      $pull: { lesson: { _id: lessonId } },
+    }).exec();
+    res.json({ ok: true });
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("failed to delete lesson");
   }
 };

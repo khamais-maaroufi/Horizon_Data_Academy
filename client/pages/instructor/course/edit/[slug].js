@@ -8,6 +8,8 @@ import Resizer from "react-image-file-resizer";
 import { toast } from "react-toastify";
 import { Router } from "next/router";
 import { useRouter } from "next/router";
+import { Avatar, List } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 
 const CourseEdit = () => {
   //state
@@ -20,6 +22,7 @@ const CourseEdit = () => {
     loading: false,
     imagePreview: "",
     category: "",
+    lessons: [],
   });
 
   const [preview, setPreview] = useState("");
@@ -68,19 +71,35 @@ const CourseEdit = () => {
     try {
       e.preventDefault();
       console.log(values);
-      const { data } = await axios.post("/api/course", { ...values, image });
-      toast.success("now you can start adding lessons");
-      router.push("/instructor");
-      //console.log(data);
+      const { data } = await axios.put(`/api/course/${slug}`, {
+        ...values,
+        image,
+      });
+      toast.success("The course is updated successfully");
+      //router.push("/instructor");
+      console.log(data);
     } catch (err) {
       console.log(err);
-      toast.error("Failed to save the course! Try again.");
+      toast.error("Failed to update the course! Try again.");
     }
+  };
+
+  const handleDelete = async (index) => {
+    const answer = window.confirm(
+      "Are you sure you're going to Delete that Lesson?"
+    );
+    if (!answer) return;
+    let allLessons = values.lessons;
+    const removed = allLessons.splice(index, 1);
+    setValues({ ...values, lessons: allLessons });
+    console.log(removed[0]._id);
+    const { data } = await axios.put(`/api/course/${slug}/${removed[0]._id}`);
+    console.log("deleted lesson ===>", data);
   };
 
   return (
     <InstructorRoute>
-      <h1 className="jumbotron text-center square">Create Course</h1>
+      <h1 className="jumbotron text-center square">Edit Course</h1>
       <div className="pt-3 pb-3">
         <CourseCreateForm
           handleSubmit={handleSubmit}
@@ -89,7 +108,33 @@ const CourseEdit = () => {
           values={values}
           setValues={setValues}
           preview={preview}
+          editPage={true}
         />
+      </div>
+
+      <div className="row pb-5">
+        <div className="col lesson-list">
+          <h4>{values && values.lessons && values.lessons.length} Lessons</h4>
+          <hr />
+          <List
+            itemLayout="horizontal"
+            dataSource={values && values.lessons}
+            renderItem={(item, index) => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar>{index + 1}</Avatar>}
+                  title={item.title}
+                ></List.Item.Meta>
+                <DeleteOutlined
+                  spin={true}
+                  title="delete"
+                  onClick={() => handleDelete(index)}
+                  className="text-danger"
+                />
+              </List.Item>
+            )}
+          ></List>
+        </div>
       </div>
     </InstructorRoute>
   );

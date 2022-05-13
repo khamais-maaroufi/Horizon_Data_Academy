@@ -91,7 +91,7 @@ const CourseView = () => {
                     </p>
                   </div>
 
-                  <div className="d-flex col">
+                  <div className="d-flex col ">
                     <Tooltip title="Edit">
                       <EditOutlined
                         onClick={() =>

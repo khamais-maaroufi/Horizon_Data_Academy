@@ -20,7 +20,7 @@ const AddLessonForm = ({ values, setValues, handleAddLesson, uploading }) => {
           type="text"
           className="form-control square"
           onChange={(e) => setValues({ ...values, title: e.target.value })}
-          values={values.title}
+          value={values.title}
           placeHolder="Title"
           autoFocus
           required
@@ -31,7 +31,7 @@ const AddLessonForm = ({ values, setValues, handleAddLesson, uploading }) => {
           col="7"
           row="7"
           onChange={(e) => setValues({ ...values, content: e.target.value })}
-          values={values.content}
+          value={values.content}
           placeHolder="Content"
         ></textarea>
 

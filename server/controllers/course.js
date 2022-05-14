@@ -154,7 +154,6 @@ export const publish = async (req, res) => {
     ).exec();
     res.json(published);
   } catch (err) {
-    console.log(err);
     res.status(400).send("failed to publish course");
   }
 };
@@ -175,7 +174,15 @@ export const unpublish = async (req, res) => {
     ).exec();
     res.json(unpublished);
   } catch (err) {
-    console.log(err);
     res.status(400).send("failed to unpublish course");
+  }
+};
+
+export const courses = async (req, res) => {
+  try {
+    const all = await Course.find({published: "true"}).populate("instructor", "_id name").exec();
+    res.json(all);
+  } catch (err) {
+    res.status(400).send("failed to Update courses on front page");
   }
 };

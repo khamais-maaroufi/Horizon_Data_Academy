@@ -15,7 +15,11 @@ import {
   DeleteLesson,
   publish,
   unpublish,
+  courses,
 } from "../controllers/course";
+
+//publishing the courses on the frontpage
+router.get("/courses", courses);
 
 // image
 router.post("/course/upload-image", requireSignin, uploadImage);

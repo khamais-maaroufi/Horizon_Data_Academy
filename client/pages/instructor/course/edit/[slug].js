@@ -126,6 +126,7 @@ const CourseEdit = () => {
                   title={item.title}
                 ></List.Item.Meta>
                 <DeleteOutlined
+                  style={{ fontSize: "300%" }}
                   spin={true}
                   title="delete"
                   onClick={() => handleDelete(index)}

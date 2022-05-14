@@ -37,6 +37,9 @@ const courseSchema = new mongoose.Schema({
     maxlength: 320,
     required: true,
   },
+  published: {
+    type: String,
+  },
   slug: {
     type: String,
     lowercase: true,

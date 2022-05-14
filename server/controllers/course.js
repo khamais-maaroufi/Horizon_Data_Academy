@@ -137,3 +137,45 @@ export const DeleteLesson = async (req, res) => {
     res.status(400).send("failed to delete lesson");
   }
 };
+
+export const publish = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const course = await Course.findOne({ courseId }).exec();
+    if (req.user._id != course.instructor) {
+      return res.status(400).send("unauthorized");
+    }
+    const published = await Course.findByIdAndUpdate(
+      courseId,
+      { published: "true" },
+      {
+        new: true,
+      }
+    ).exec();
+    res.json(published);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("failed to publish course");
+  }
+};
+
+export const unpublish = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const course = await Course.findOne({ courseId }).exec();
+    if (req.user._id != course.instructor) {
+      return res.status(400).send("unauthorized");
+    }
+    const unpublished = await Course.findByIdAndUpdate(
+      courseId,
+      { published: "false" },
+      {
+        new: true,
+      }
+    ).exec();
+    res.json(unpublished);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send("failed to unpublish course");
+  }
+};

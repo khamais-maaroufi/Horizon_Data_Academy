@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { Badge } from "antd";
-import LessonCard from "../../components/cards/LessonCard";
 import { Avatar, List } from "antd";
 
 const SingleCourse = () => {
@@ -66,6 +65,11 @@ const SingleCourse = () => {
                   avatar={<Avatar>{index + 1}</Avatar>}
                   title={item.title}
                 ></List.Item.Meta>
+                <div>
+                  <p>{item.content}</p>
+                  <h5>{item.start_date}</h5>
+                  <h5>{item.time}</h5>
+                </div>
               </List.Item>
             )}
           ></List>

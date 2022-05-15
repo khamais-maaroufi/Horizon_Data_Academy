@@ -5,6 +5,7 @@ import { Badge } from "antd";
 import { Avatar, List, Button } from "antd";
 import { LoadingOutlined, SafetyOutlined } from "@ant-design/icons";
 import { Context } from "../../context";
+import { toast } from "react-toastify";
 
 const SingleCourse = () => {
   const { state } = useContext(Context);
@@ -40,12 +41,38 @@ const SingleCourse = () => {
     fetchCourse();
   }, []);
 
-  const handlePaidEnrollment = () => {
-    console.log("handle paid");
+  const handlePaidEnrollment = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const { data } = await axios.post(`/api/paid-enrollment/${course._id}`);
+      console.log("handle free", data);
+      toast.success(
+        "Enrolled Successfully, Now you should pay for your course before attending to the first lesson in Horizon Data local Center"
+      );
+      setLoading(false);
+    } catch (err) {
+      toast.error("Failed to enroll! Try Later");
+      console.log(err);
+      setLoading(false);
+    }
   };
 
-  const handleFreeEnrollment = () => {
-    console.log("handle free");
+  const handleFreeEnrollment = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const { data } = await axios.post(`/api/free-enrollment/${course._id}`);
+      console.log("handle free", data);
+      toast.success(
+        "Enrolled Successfully You can attend to your Course in Horizon Data Local Center for free"
+      );
+      setLoading(false);
+    } catch (err) {
+      toast.error("Failed to enroll! Try Later");
+      console.log(err);
+      setLoading(false);
+    }
   };
 
   return (
@@ -85,7 +112,7 @@ const SingleCourse = () => {
                       shape="round"
                       icon={<SafetyOutlined />}
                       size="large"
-                      disabled={loading}
+                      disabled={loading || enrolled.status || !user}
                       onClick={
                         course.paid
                           ? handlePaidEnrollment

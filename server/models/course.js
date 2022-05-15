@@ -67,6 +67,18 @@ const courseSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  enrolled_list: [
+    {
+      type: mongoose.ObjectId,
+      ref: "User",
+    },
+  ],
+  PreEnrolled_list: [
+    {
+      type: mongoose.ObjectId,
+      ref: "User",
+    },
+  ],
   lessons: [lessonSchema],
   timestamps: Date,
 });

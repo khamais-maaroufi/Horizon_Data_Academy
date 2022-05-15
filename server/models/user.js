@@ -36,10 +36,12 @@ const userSchema = new Schema({
     default: "Subscriber",
     enum: ROLE,
   },
-  courses: {
-    type: mongoose.ObjectId,
-    ref: "Course",
-  },
+  courses: [
+    {
+      type: mongoose.ObjectId,
+      ref: "Course",
+    },
+  ],
   timestamps: Date,
 });
 

@@ -1,21 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { Badge } from "antd";
-import { Avatar, List } from "antd";
+import { Avatar, List, Button } from "antd";
+import { LoadingOutlined, SafetyOutlined } from "@ant-design/icons";
+import { Context } from "../../context";
 
 const SingleCourse = () => {
+  const { state } = useContext(Context);
+  const { user } = state;
   const router = useRouter();
   const { slug } = router.query;
   const [course, setCourse] = useState({});
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [enrolled, setEnrolled] = useState({});
+
+  const checkEnrollement = async () => {
+    const { data } = await axios.get(`/api/check-enrollment/${course._id}`);
+    setEnrolled(data);
+    console.log("check enrollement", data);
+  };
+
+  useEffect(() => {
+    //
+    if (user && course) checkEnrollement();
+  }, [user, course]);
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const { data } = await axios.get(`/api/course/${slug}`);
         setCourse(data);
-        console.log(data);
         setName(data.instructor.name);
       } catch (err) {
         console.log(err);
@@ -23,6 +39,14 @@ const SingleCourse = () => {
     };
     fetchCourse();
   }, []);
+
+  const handlePaidEnrollment = () => {
+    console.log("handle paid");
+  };
+
+  const handleFreeEnrollment = () => {
+    console.log("handle free");
+  };
 
   return (
     <>
@@ -49,6 +73,32 @@ const SingleCourse = () => {
                 </div>
                 <div className="col-md-4">
                   <img src={course.image} className="img img-fluid" />
+                  {loading ? (
+                    <div className="d-flex justify-content-center">
+                      <LoadingOutlined className="h1 text-center" />
+                    </div>
+                  ) : (
+                    <Button
+                      className="mb-3 mt-3"
+                      type="primary"
+                      block
+                      shape="round"
+                      icon={<SafetyOutlined />}
+                      size="large"
+                      disabled={loading}
+                      onClick={
+                        course.paid
+                          ? handlePaidEnrollment
+                          : handleFreeEnrollment
+                      }
+                    >
+                      {user
+                        ? enrolled.status
+                          ? "Enrolled Successfully"
+                          : "Enroll Now"
+                        : "Login to enroll"}
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>

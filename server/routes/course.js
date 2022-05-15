@@ -16,6 +16,7 @@ import {
   publish,
   unpublish,
   courses,
+  checkEnrollment,
 } from "../controllers/course";
 
 //publishing the courses on the frontpage
@@ -40,5 +41,9 @@ router.post("/course/lesson/:slug/:instructorId", requireSignin, addLesson);
 //update course
 router.put("/course/:slug", requireSignin, update);
 router.put("/course/:slug/:lessonId", requireSignin, DeleteLesson);
+
+//check user's enrollment
+
+router.get('/check-enrollment/:courseId', requireSignin, checkEnrollment);
 
 module.exports = router;

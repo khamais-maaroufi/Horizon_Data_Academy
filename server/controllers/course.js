@@ -3,6 +3,7 @@ import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import { storage, app } from "./firebase";
 import slugify from "slugify";
 import course from "../models/course";
+import User from "../models/user";
 
 //upload image and remove  it
 
@@ -180,9 +181,30 @@ export const unpublish = async (req, res) => {
 
 export const courses = async (req, res) => {
   try {
-    const all = await Course.find({published: "true"}).populate("instructor", "_id name").exec();
+    const all = await Course.find({ published: "true" })
+      .populate("instructor", "_id name")
+      .exec();
     res.json(all);
   } catch (err) {
     res.status(400).send("failed to Update courses on front page");
+  }
+};
+
+export const checkEnrollment = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    //find courses of currently logged in user
+    const user = await User.findById(req.user._id).exec();
+    // check if courseid is in user courses
+    let ids = [];
+    let length = user.courses && user.courses.length;
+    for (let i = 0; i < length; i++) {
+      ids.push(user.courses[i]._id.toString());
+    }
+    res.json({
+      status: ids.includes(courseId),
+    });
+  } catch (err) {
+    res.status(400).send("failed to check user enrollment");
   }
 };

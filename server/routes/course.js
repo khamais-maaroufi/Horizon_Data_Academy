@@ -19,6 +19,7 @@ import {
   checkEnrollment,
   EnrollFree,
   EnrollPaid,
+  FetchUserCourses,
 } from "../controllers/course";
 
 //publishing the courses on the frontpage
@@ -53,5 +54,8 @@ router.get("/check-enrollment/:courseId", requireSignin, checkEnrollment);
 router.post("/free-enrollment/:courseId", requireSignin, EnrollFree);
 
 router.post("/paid-enrollment/:courseId", requireSignin, EnrollPaid);
+
+// fetch all user courses
+router.get("/user-courses", requireSignin, FetchUserCourses);
 
 module.exports = router;

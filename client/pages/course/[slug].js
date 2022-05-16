@@ -13,7 +13,6 @@ const SingleCourse = () => {
   const router = useRouter();
   const { slug } = router.query;
   const [course, setCourse] = useState({});
-  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [enrolled, setEnrolled] = useState({});
 
@@ -29,17 +28,24 @@ const SingleCourse = () => {
   }, [user, course]);
 
   useEffect(() => {
+    const data = localStorage.getItem("course");
+    if (data) {
+      setCourse(JSON.parse(data));
+      //setName(JSON.parse(data.instructor.name));
+    }
+  }, []);
+
+  useEffect(() => {
     const fetchCourse = async () => {
       try {
         const { data } = await axios.get(`/api/course/${slug}`);
-        setCourse(data);
-        setName(data.instructor.name);
+        localStorage.setItem("course", JSON.stringify(data));
       } catch (err) {
         console.log(err);
       }
     };
     fetchCourse();
-  }, []);
+  });
 
   const handlePaidEnrollment = async (e) => {
     e.preventDefault();
@@ -88,7 +94,9 @@ const SingleCourse = () => {
                     {course.description && course.description.substring(0, 160)}
                     ...
                   </p>
-                  <p>Created by {name}</p>
+                  {course.instructor && (
+                    <p>Created by {course.instructor.name}</p>
+                  )}
                   <h4 className="pt-2 " style={{ color: "white" }}>
                     {course.paid ? course.price + " TND" : "For free"}
                   </h4>

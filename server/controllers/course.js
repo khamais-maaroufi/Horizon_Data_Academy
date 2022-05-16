@@ -288,3 +288,41 @@ export const FetchUserCourses = async (req, res) => {
     res.status(400).send("failed to  fetch user courses");
   }
 };
+
+export const AdminRead = async (req, res) => {
+  try {
+    const all = await Course.find({ published: "true" })
+      .populate("instructor PreEnrolled_list")
+      .exec();
+    res.json(all);
+  } catch (err) {
+    res.status(400).send("failed fetch courses for admin");
+  }
+};
+
+export const AdminCourseRead = async (req, res) => {
+  try {
+    const course = await Course.findOne({ slug: req.params.slug })
+      .populate("instructor PreEnrolled_list")
+      .exec();
+    res.json(course);
+  } catch (err) {
+    res.status(400).send("failed fetch preEnrolled list");
+  }
+};
+
+export const AdminValidate = async (req, res) => {
+  try {
+    const { slug, studentId } = req.params;
+    const course = await Course.findOne({ slug }).exec();
+    const courseDeleted = await Course.findByIdAndUpdate(course._id, {
+      $push: { enrolled_list: { _id: studentId } },
+    }).exec();
+    const StudentDeleted = await Course.findByIdAndUpdate(course._id, {
+      $pull: { PreEnrolled_list: { _id: studentId } },
+    }).exec();
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(400).send("failed to validate enrollment");
+  }
+};

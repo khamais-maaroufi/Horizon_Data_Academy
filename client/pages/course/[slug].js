@@ -52,7 +52,7 @@ const SingleCourse = () => {
     try {
       setLoading(true);
       const { data } = await axios.post(`/api/paid-enrollment/${course._id}`);
-      console.log("handle free", data);
+      console.log("handle paid", data);
       toast.success(
         "Enrolled Successfully, Now you should pay for your course before attending to the first lesson in Horizon Data local Center"
       );

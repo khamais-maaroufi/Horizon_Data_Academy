@@ -20,7 +20,19 @@ import {
   EnrollFree,
   EnrollPaid,
   FetchUserCourses,
+  AdminRead,
+  AdminCourseRead,
+  AdminValidate,
 } from "../controllers/course";
+
+//enroll
+
+router.post("/free-enrollment/:courseId", requireSignin, EnrollFree);
+router.post("/paid-enrollment/:courseId", requireSignin, EnrollPaid);
+
+//check user's enrollment
+
+router.get("/check-enrollment/:courseId", requireSignin, checkEnrollment);
 
 //publishing the courses on the frontpage
 router.get("/courses", courses);
@@ -45,17 +57,12 @@ router.post("/course/lesson/:slug/:instructorId", requireSignin, addLesson);
 router.put("/course/:slug", requireSignin, update);
 router.put("/course/:slug/:lessonId", requireSignin, DeleteLesson);
 
-//check user's enrollment
-
-router.get("/check-enrollment/:courseId", requireSignin, checkEnrollment);
-
-//enroll
-
-router.post("/free-enrollment/:courseId", requireSignin, EnrollFree);
-
-router.post("/paid-enrollment/:courseId", requireSignin, EnrollPaid);
-
 // fetch all user courses
 router.get("/user-courses", requireSignin, FetchUserCourses);
+
+//admin fetching all the courses
+router.get("/Admin-courses", requireSignin, AdminRead);
+router.get("/Admin-course/:slug", requireSignin, AdminCourseRead);
+router.put("/Admin-course/:slug/:studentId", requireSignin, AdminValidate);
 
 module.exports = router;

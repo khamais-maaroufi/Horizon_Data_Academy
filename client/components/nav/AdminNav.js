@@ -15,15 +15,7 @@ const AdminNav = () => {
     <div className="nav flex-column nav-pills ">
       <Link href="/Admin">
         <a className={`nav-link ${current === "/Admin" && "active"}`}>
-          Courses List
-        </a>
-      </Link>
-
-      <Link href="/Admin/Evalidation">
-        <a
-          className={`nav-link ${current === "/Admin/Evalidation" && "active"}`}
-        >
-          Enrollemennt Validation
+          Published Courses List
         </a>
       </Link>
     </div>

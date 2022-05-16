@@ -10,6 +10,7 @@ import {
   UploadOutlined,
   QuestionCircleOutlined,
   CloseCircleOutlined,
+  UserSwitchOutlined,
 } from "@ant-design/icons";
 import React from "react";
 import ReactMarkdown from "react-markdown";
@@ -29,13 +30,14 @@ const CourseView = () => {
     time: null,
   });
   const [uploading, setUploading] = useState(false);
-
+  const [studentsModal, setSudentsModal] = useState(false);
   const router = useRouter();
   const { slug } = router.query;
 
   const loadCourse = async () => {
     const { data } = await axios.get(`/api/course/${slug}`);
     setCourse(data);
+    console.log(data);
   };
 
   //handle_publishing
@@ -144,12 +146,21 @@ const CourseView = () => {
                         <QuestionCircleOutlined className="h5 pointer text-danger" />
                       </Tooltip>
                     ) : course.published ? (
-                      <Tooltip title="unpublish">
-                        <CloseCircleOutlined
-                          style={{ fontSize: "300%" }}
-                          onClick={(e) => unpublish(e, course._id)}
-                        />
-                      </Tooltip>
+                      <div>
+                        <Tooltip title="unpublish">
+                          <CloseCircleOutlined
+                            style={{ fontSize: "300%", color: "red" }}
+                            onClick={(e) => unpublish(e, course._id)}
+                          />
+                        </Tooltip>
+
+                        <Tooltip title="Attendance List">
+                          <UserSwitchOutlined
+                            style={{ fontSize: "300%", color: "blue" }}
+                            onClick={() => setSudentsModal(true)}
+                          />
+                        </Tooltip>
+                      </div>
                     ) : (
                       <Tooltip title="publish">
                         <CheckOutlined
@@ -198,6 +209,31 @@ const CourseView = () => {
                   handleAddLesson={handleAddLesson}
                   uploading={uploading}
                 />
+              </Modal>
+
+              <Modal
+                visible={studentsModal}
+                centered
+                title="Student Attendance List"
+                onCancel={() => setSudentsModal(false)}
+                footer={null}
+              >
+                <h4>
+                  {course.enrolled_list && course.enrolled_list.length} Students
+                </h4>
+                <List
+                  itemLayout="horizontal"
+                  dataSource={course && course.enrolled_list}
+                  renderItem={(item, index) => (
+                    <List.Item>
+                      <List.Item.Meta
+                        avatar={<Avatar>{index + 1}</Avatar>}
+                        title={item.name + " " + "Email: " + item.email}
+                      >
+                      </List.Item.Meta>
+                    </List.Item>
+                  )}
+                ></List>
               </Modal>
 
               <div className="row pb-5">

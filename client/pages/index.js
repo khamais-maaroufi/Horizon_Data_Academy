@@ -15,9 +15,28 @@ const index = () => {
 
   return (
     <>
-      <h1 className="jumbotron text-center bg-primary">Horizon Data Academy</h1>
       <div className="container-fluid">
         <div className="row">
+          <div className="jumbotron bg-primary square">
+            <div className="row">
+              <div className="col-md-8">
+                <h1 className="text-light font-weight-bold mt-4 pt-3">
+                  Horizon Data Academy
+                </h1>
+              </div>
+              <div className="col-md-4">
+                <img
+                  src="https://o.remove.bg/downloads/2da27ca5-5485-4b6d-b439-d3b972bac149/123660370_206683887573188_5816735759766621630_n-removebg-preview.png"
+                  className="img img-fluid"
+                  width="50%"
+                  height="50%"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="row mt-3 pt-3">
           {courses.map((course) => (
             <div key={course._id} className="col-md-4">
               <CourseCard course={course} />

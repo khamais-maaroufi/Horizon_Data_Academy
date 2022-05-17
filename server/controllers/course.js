@@ -213,7 +213,7 @@ export const EnrollFree = async (req, res) => {
   try {
     const { courseId } = req.params;
     const course = await Course.findOne({ courseId }).exec();
-    if (course.paid) return;
+    //if (course.paid) return;
     const resultU = await User.findByIdAndUpdate(
       req.user._id,
       {
@@ -247,7 +247,7 @@ export const EnrollPaid = async (req, res) => {
   try {
     const { courseId } = req.params;
     const course = await Course.findOne({ courseId }).exec();
-    if (!course.paid) return;
+    //if (!course.paid) return;
     const resultU = await User.findByIdAndUpdate(
       req.user._id,
       {

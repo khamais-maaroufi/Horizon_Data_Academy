@@ -25,11 +25,6 @@ import {
   AdminValidate,
 } from "../controllers/course";
 
-//enroll
-
-router.post("/free-enrollment/:courseId", requireSignin, EnrollFree);
-router.post("/paid-enrollment/:courseId", requireSignin, EnrollPaid);
-
 //check user's enrollment
 
 router.get("/check-enrollment/:courseId", requireSignin, checkEnrollment);
@@ -59,6 +54,11 @@ router.put("/course/:slug/:lessonId", requireSignin, DeleteLesson);
 
 // fetch all user courses
 router.get("/user-courses", requireSignin, FetchUserCourses);
+
+//enroll
+
+router.post("/free-enrollment/:courseId", requireSignin, EnrollFree);
+router.post("/paid-enrollment/:courseId", requireSignin, EnrollPaid);
 
 //admin fetching all the courses
 router.get("/Admin-courses", requireSignin, AdminRead);

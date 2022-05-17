@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import CourseCard from "../components/cards/CourseCard";
+import Footer from "../components/Footer/Footer";
 
 const index = () => {
   const [courses, setCourses] = useState([]);
@@ -20,7 +21,7 @@ const index = () => {
           <div className="jumbotron bg-primary square">
             <div className="row">
               <div className="col-md-8">
-                <h1 className="text-light font-weight-bold mt-4 pt-3">
+                <h1 className="text-light font-weight-bold mt-3 pt-6">
                   Horizon Data Academy
                 </h1>
               </div>
@@ -42,6 +43,9 @@ const index = () => {
               <CourseCard course={course} />
             </div>
           ))}
+        </div>
+        <div className="row mt-3 pt-3">
+          <Footer />
         </div>
       </div>
     </>
